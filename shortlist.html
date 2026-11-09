@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortlist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body  class="min-h-screen bg-pink-100 text-gray-800">
+
+     <header class="fixed top-0 left-0 z-50 w-full bg-rose-200">
+        <div class="flex items-center justify-between px-6 py-4">
+            <h1 class="text-2xl font-bold text-rose-800 tracking-wide">DevScope </h1>
+            <nav>
+                <ul class="flex items-center gap-5">
+                    <li><a href="index.html" class="text-rose-800"> Recherche</a></li>
+                    <li><a href="shortlist.html"class="rounded-lg bg-pink-100 px-4 py-2 text-rose-800 ">Shortlist</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+     <main class="flex flex-col min-h-screen mt-5 px-5 pt-20">
+        <section class=" rounded-2xl border border-rose-200 bg-white/70 p-6 shadow-sm ">
+            <h1 class="text-3xl font-semibold text-rose-900 sm:text-4xl">
+                Ma Shortlist
+            </h1>
+            <p class="mt-5 text-rose-400 font-bold">
+                les candidats dans votre shortlist .
+            </p>
+        </section>
+        <section class="mt-10 flex flex-col justify-between gap-3 rounded-2xl border border-rose-200 bg-white/70 p-6 shadow-sm sm:flex-row">
+                <nav>
+                    <ul class="flex flex-wrap items-center gap-2 text-rose-800">
+                        <li><button type="button" class="bg-rose-300 rounded-lg p-4">Tous</button></li>
+                        <li><button type="button" class="p-4 rounded-lg hover:bg-rose-200">A contacter</button></li>
+                        <li><button type="button" class="p-4 rounded-lg hover:bg-rose-200">Entretien</button></li>
+                        <li><button type="button" class="p-4 rounded-lg hover:bg-rose-200">Retenu</button></li>
+                        <li><button type="button" class="p-4 rounded-lg hover:bg-rose-200">Refusé</button></li>
+                    </ul>
+                </nav>
+                 <input type="search" id="Recherche" placeholder="Rechercher un candidat ..."  class="rounded-xl border border-rose-200 bg-white px-4 py-3 outline-none focus:border-rose-400 sm:w-27" >
+        </section>
+
+     </main>
+</body>
+</html>
