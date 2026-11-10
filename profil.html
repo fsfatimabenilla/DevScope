@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+     <script src="https://cdn.tailwindcss.com"></script>
+     <script src="js/modeles/profile.js" type="module"></script>
+</head>
+
+    <body class="min-h-screen bg-pink-100 text-gray-800">
+
+    <header class="fixed top-0 left-0 z-50 w-full bg-rose-200">
+        <div class="flex items-center justify-between px-6 py-4">
+            <h1 class="text-2xl font-bold text-rose-800 tracking-wide">DevScope </h1>
+            <nav>
+                <ul class="flex items-center gap-5">
+                    <li><a href="index.html" class="rounded-lg bg-pink-100 px-4 py-2 text-rose-800"> Recherche</a></li>
+                    <li><a href="shortlist.html"class="text-rose-800">Shortlist</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="min-h-screen px-5 pt-28 pb-10">
+        <section class="mx-auto w-full max-w-3xl">
+            <div class="text-center sm:text-left">
+                <h3 id="nom" class="text-2xl font-bold text-rose-900">Username</h3>
+                <p id="login" class="mt-1 text-rose-500">Login</p>
+            </div>
+            <div class="mt-7">
+                <h4 class="mb-2 font-semibold text-rose-800">A propos</h4>
+                <p id="bio" class="mt-2 text-gray-600"></p>
+            </div>
+
+        </section>
+
+    </main>
+</body>
+</html>

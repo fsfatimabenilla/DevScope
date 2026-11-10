@@ -1,6 +1,6 @@
 
 export async function githubProfile(username) {
-const api = `https://api.github.com/users/${username}` ;
+  const api = `https://api.github.com/users/${username}` ;
 
     try{
         const res = await fetch(api,{
@@ -9,7 +9,7 @@ const api = `https://api.github.com/users/${username}` ;
             throw new Error(`http erreur: ${res.status}`);
         }
         const data = await res.json();
-        console.log(data);
+        return data;
     }catch(e){
         console.log("error:",e.message); 
         throw e;
