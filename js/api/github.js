@@ -15,3 +15,18 @@ export async function githubProfile(username) {
         throw e;
     }
 }
+
+export async function githubDepots(username) {
+    const de = `https://api.github.com/users/${username}/repos` ; 
+    try{
+        const res = await fetch(de);
+        if(!res.ok){
+            throw new Error(`http erreur: ${res.status}`);
+        }
+        const data = await res.json();
+        return data;
+    }catch(e){
+        console.log("error:",e.message); 
+        throw e;
+    }
+}

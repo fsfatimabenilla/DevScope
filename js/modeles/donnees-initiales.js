@@ -7,3 +7,6 @@ export const erreurMsg = document.querySelector("#error");
 export const userName = document.querySelector("#nom");
 export const login = document.querySelector("#login");
 export const bio = document.querySelector("#bio");
+
+export const repos = document.querySelector("#depot-containir");
+export const totalDepots = document.querySelector("#tot-depots");

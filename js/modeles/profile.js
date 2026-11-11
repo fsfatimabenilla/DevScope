@@ -1,6 +1,6 @@
 
-import { githubProfile } from "../api/github.js";
-import { userName, login, bio } from "./donnees-initiales.js";
+import { githubProfile , githubDepots } from "../api/github.js";
+import { userName, login, bio , repos, totalDepots } from "./donnees-initiales.js";
 
 const username = new URLSearchParams(window.location.search).get("username");
 async function affichageProfile() {
@@ -15,3 +15,37 @@ async function affichageProfile() {
     }
 }
 affichageProfile();
+
+async function affichageDepots() {
+    try {
+        const depots = await githubDepots(username);
+
+        repos.innerHTML = "";
+        totalDepots.textContent = `${depots.length} dépôts`;
+
+        depots.forEach(data => {
+            const article = document.createElement("div");
+            article.className = "bg-white border border-rose-200 rounded-xl p-4";
+
+            const name = document.createElement("h3");
+            name.className = "text-xl font-bold text-rose-800";
+            name.textContent = data.name;
+
+            const description = document.createElement("p");
+            description.className = "text-gray-600 mt-3";
+            description.textContent = data.description || "Aucune description disponible";
+
+            const language = document.createElement("p");
+            language.className = "text-rose-300 mt-3 font-semibold";
+            language.textContent = data.language || "Langage non spécifié";
+
+            article.append(name, description, language);
+            repos.append(article);
+        });
+
+    } catch (e) {
+        console.log("Erreur:", e.message);
+    }
+}
+
+affichageDepots();

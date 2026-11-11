@@ -10,7 +10,7 @@
 
     <body class="min-h-screen bg-pink-100 text-gray-800">
 
-    <header class="fixed top-0 left-0 z-50 w-full bg-rose-200">
+    <header class=" w-full bg-rose-200">
         <div class="flex items-center justify-between px-6 py-4">
             <h1 class="text-2xl font-bold text-rose-800 tracking-wide">DevScope </h1>
             <nav>
@@ -21,10 +21,10 @@
             </nav>
         </div>
     </header>
-
-    <main class="min-h-screen px-5 pt-28 pb-10">
-        <section class="mx-auto w-full max-w-3xl">
-            <div class="text-center sm:text-left">
+        <div class="flex flex-col lg:flex-row min-h-[calc(100vh-74px)]">
+            <aside class="w-full lg:w-80 lg:shrink-0 m-2 bg-pink-300 border rounded-2xl border-rose-400 p-4">
+                <h2 class="text-3xl font-semibold text-red-600">Informations personnelles:</h2>
+                 <div class="text-center sm:text-left">
                 <h3 id="nom" class="text-2xl font-bold text-rose-900">Username</h3>
                 <p id="login" class="mt-1 text-rose-500">Login</p>
             </div>
@@ -32,9 +32,19 @@
                 <h4 class="mb-2 font-semibold text-rose-800">A propos</h4>
                 <p id="bio" class="mt-2 text-gray-600"></p>
             </div>
+            </aside>
+            
+            <main class="w-full min-w-0 flex-1 border border-rose-200 rounded-2xl p-3 m-2">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-rose-800">dépôts</h2>
+                    <span id="tot-depots" class="bg-rose-300">0 dépots</span>
+                </div>
+                <div id="depot-containir" class="grid grid-cols gap-4">
 
-        </section>
+                </div>
+            </main>
 
-    </main>
+        </div>
+
 </body>
 </html>
