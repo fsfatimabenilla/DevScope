@@ -22,24 +22,43 @@
         </div>
     </header>
         <div class="flex flex-col lg:flex-row min-h-[calc(100vh-74px)]">
-            <aside class="w-full lg:w-80 lg:shrink-0 m-2 bg-pink-300 border rounded-2xl border-rose-400 p-4">
-                <h2 class="text-3xl font-semibold text-red-600">Informations personnelles:</h2>
-                 <div class="text-center sm:text-left">
-                <h3 id="nom" class="text-2xl font-bold text-rose-900">Username</h3>
-                <p id="login" class="mt-1 text-rose-500">Login</p>
+                 <aside class="w-full lg:w-80 lg:shrink-0 m-3">
+
+            <div id="profile-card"
+                 class="bg-white border border-rose-200 rounded-2xl p-6">
+
+                <div class="flex flex-col items-center text-center">
+
+                    <img id="avatar"src=""
+                     alt="Photo du développeur" class="w-32 h-32 rounded-full object-cover border-4 border-rose-200">
+                    <h2 id="nom" class="mt-4 text-2xl font-bold text-rose-900">
+                        Username
+                    </h2>
+                    <p id="login" class="mt-1 text-rose-500"> @login</p>
+
+                </div>
+
+                <div class="mt-7">
+                    <h3 class="font-bold text-rose-800 text-lg">
+                        À propos
+                    </h3>
+                    <p id="bio" class="mt-2 text-gray-600 text-sm leading-relaxed">Aucune bio disponible </p>
+                </div>
+
+                <button id="btn-shortlist" class="w-full mt-7 rounded-xl bg-rose-400 px-4 py-3 font-semibold ">
+                    + Ajouter à la shortlist
+                </button>
+
+                <p id="message-shortlist" class="mt-3 text-center text-sm"></p>
             </div>
-            <div class="mt-7">
-                <h4 class="mb-2 font-semibold text-rose-800">A propos</h4>
-                <p id="bio" class="mt-2 text-gray-600"></p>
-            </div>
-            </aside>
+        </aside>
             
             <main class="w-full min-w-0 flex-1 border border-rose-200 rounded-2xl p-3 m-2">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-rose-800">dépôts</h2>
                     <span id="tot-depots" class="bg-rose-300">0 dépots</span>
                 </div>
-                <div id="depot-containir" class="grid grid-cols gap-4">
+                <div id="depot-containir" class="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto p-3  max-h-[600px] ">
 
                 </div>
             </main>

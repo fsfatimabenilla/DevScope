@@ -1,12 +1,14 @@
 
 import { githubProfile , githubDepots, githublanguage } from "../api/github.js";
-import { userName, login, bio , repos, totalDepots } from "./donnees-initiales.js";
+import { userName, login, bio , repos, totalDepots,avater } from "./donnees-initiales.js";
 import { mockapi } from "../api/mackapi.js";
 
 const username = new URLSearchParams(window.location.search).get("username");
 async function affichageProfile() {
     try {
         const data = await githubProfile(username);
+
+        avatar.src = data.avatar_url;
         userName.textContent = data.name || data.login;
         login.textContent = `@${data.login}`;
         bio.textContent = data.bio || "Aucune bio disponible";
@@ -29,7 +31,7 @@ async function affichageDepots() {
             const languages = await githublanguage(username,data.name);
             
             const article = document.createElement("div");
-            article.className = "bg-white border border-rose-200 rounded-xl p-4";
+            article.className = " bg-white border border-rose-200 rounded-xl p-4";
 
             const name = document.createElement("h3");
             name.className = "text-xl font-bold text-rose-800";
