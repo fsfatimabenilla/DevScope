@@ -1,6 +1,7 @@
 
 import { githubProfile , githubDepots, githublanguage } from "../api/github.js";
 import { userName, login, bio , repos, totalDepots } from "./donnees-initiales.js";
+import { mockapi } from "../api/mackapi.js";
 
 const username = new URLSearchParams(window.location.search).get("username");
 async function affichageProfile() {
@@ -53,3 +54,10 @@ async function affichageDepots() {
 }
 
 affichageDepots();
+
+async function verifierMockapi() {
+    const developer = await mockapi() ;
+    console.log(developer);
+}
+
+verifierMockapi();
