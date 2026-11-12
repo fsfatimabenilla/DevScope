@@ -1,5 +1,5 @@
 
-import { githubProfile , githubDepots } from "../api/github.js";
+import { githubProfile , githubDepots, githublanguage } from "../api/github.js";
 import { userName, login, bio , repos, totalDepots } from "./donnees-initiales.js";
 
 const username = new URLSearchParams(window.location.search).get("username");
@@ -23,7 +23,10 @@ async function affichageDepots() {
         repos.innerHTML = "";
         totalDepots.textContent = `${depots.length} dépôts`;
 
-        depots.forEach(data => {
+        for(const data of depots){
+            
+            const languages = await githublanguage(username,data.name);
+            
             const article = document.createElement("div");
             article.className = "bg-white border border-rose-200 rounded-xl p-4";
 
@@ -36,12 +39,13 @@ async function affichageDepots() {
             description.textContent = data.description || "Aucune description disponible";
 
             const language = document.createElement("p");
-            language.className = "text-rose-300 mt-3 font-semibold";
-            language.textContent = data.language || "Langage non spécifié";
+             language.className = "text-rose-300 mt-3 font-semibold";
+             language.textContent = Object.keys(languages).join(" | ") || "Langage non spécifié";
 
             article.append(name, description, language);
+
             repos.append(article);
-        });
+        }
 
     } catch (e) {
         console.log("Erreur:", e.message);
