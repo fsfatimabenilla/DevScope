@@ -63,3 +63,33 @@ async function verifierMockapi() {
 }
 
 verifierMockapi();
+
+
+async function ajoutDevelopper() {
+    const nouveauDev = {
+        name: "Fatima",
+        avatar_url: "https://i.pravatar.cc/150",
+        language: "JavaScript",
+        rating: 5,
+        statuts: "Actif",
+        note: " Developer"
+    };
+    try {
+        const response = await fetch("https://6af58659f6270fa08d682dbf.mockapi.io/api/v1/developer", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(nouveauDev)
+        });
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP : ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Developer ajouté :", data);
+    } catch (e) {
+        console.log("Erreur :", e.message);
+    }
+}
+ajoutDevelopper();
