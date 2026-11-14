@@ -1,17 +1,39 @@
 
 import { githubProfile , githubDepots, githublanguage } from "../api/github.js";
-import { userName, login, bio , repos, totalDepots,avater } from "./donnees-initiales.js";
-import { mockapi } from "../api/mackapi.js";
+import { userName, login, bio , repos, totalDepots,avater, ajoutDev, messageBtn } from "./donnees-initiales.js";
+import { mockapi , ajoutDevelopper } from "../api/mackapi.js";
 
 const username = new URLSearchParams(window.location.search).get("username");
 async function affichageProfile() {
     try {
         const data = await githubProfile(username);
 
-        avatar.src = data.avatar_url;
+        avater.src = data.avatar_url;
         userName.textContent = data.name || data.login;
         login.textContent = `@${data.login}`;
         bio.textContent = data.bio || "Aucune bio disponible";
+
+          ajoutDev.addEventListener("click", async()=>{
+    const nouveauDev = {
+        name: data.name || data.login,
+        login: data.login,
+        avatar_url: data.avatar_url,
+        html_url: data.html_url,
+        language: "Non spécifié",
+        rating: 0,
+        statuts: "A contacter",
+        note: ""
+    }
+    try{
+        const resultat = await ajoutDevelopper(nouveauDev);
+        messageBtn.textContent = "Developper ajouter avec succés" ;
+        console.log("Developer : " , resultat);
+        window.location.href= "shortlist.html";
+
+    }catch (e) {
+        console.log(e.message);
+    }
+} );
 
     } catch (e) {
         console.log("Erreur:", e.message);
@@ -26,9 +48,10 @@ async function affichageDepots() {
         repos.innerHTML = "";
         totalDepots.textContent = `${depots.length} dépôts`;
 
-        for(const data of depots){
+        depots.forEach(async(data)=>{
+
             
-            const languages = await githublanguage(username,data.name);
+            const languages = await  githublanguage(username,data.name);
             
             const article = document.createElement("div");
             article.className = " bg-white border border-rose-200 rounded-xl p-4";
@@ -48,11 +71,12 @@ async function affichageDepots() {
             article.append(name, description, language);
 
             repos.append(article);
-        }
+          });
 
     } catch (e) {
         console.log("Erreur:", e.message);
     }
+
 }
 
 affichageDepots();
@@ -65,31 +89,33 @@ async function verifierMockapi() {
 verifierMockapi();
 
 
-async function ajoutDevelopper() {
-    const nouveauDev = {
-        name: "Fatima",
-        avatar_url: "https://i.pravatar.cc/150",
-        language: "JavaScript",
-        rating: 5,
-        statuts: "Actif",
-        note: " Developer"
-    };
-    try {
-        const response = await fetch("https://6af58659f6270fa08d682dbf.mockapi.io/api/v1/developer", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(nouveauDev)
-        });
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP : ${response.status}`);
-        }
+// async function ajoutDevelopper() {
+//     const nouveauDev = {
+//         name: "Fatima",
+//         avatar_url: "https://i.pravatar.cc/150",
+//         language: "JavaScript",
+//         rating: 5,
+//         statuts: "Actif",
+//         note: " Developer"
+//     };
+//     try {
+//         const response = await fetch("https://6af58659f6270fa08d682dbf.mockapi.io/api/v1/developer", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json"
+//             },
+//             body: JSON.stringify(nouveauDev)
+//         });
+//         if (!response.ok) {
+//             throw new Error(`Erreur HTTP : ${response.status}`);
+//         }
 
-        const data = await response.json();
-        console.log("Developer ajouté :", data);
-    } catch (e) {
-        console.log("Erreur :", e.message);
-    }
-}
-ajoutDevelopper();
+//         const data = await response.json();
+//         console.log("Developer ajouté :", data);
+//     } catch (e) {
+//         console.log("Erreur :", e.message);
+//     }
+// }
+// ajoutDevelopper();
+
+
