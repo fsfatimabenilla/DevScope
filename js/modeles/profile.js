@@ -27,7 +27,8 @@ async function affichageProfile() {
         language: "Non spécifié",
         rating: 0,
         statuts: "A contacter",
-        note: ""
+        note: "",
+        created_at: data.created_at
     }
     try{
         const resultat = await ajoutDevelopper(nouveauDev);
