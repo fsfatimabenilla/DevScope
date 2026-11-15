@@ -1,6 +1,6 @@
 
 import { githubProfile , githubDepots, githublanguage } from "../api/github.js";
-import { userName, login, bio , repos, totalDepots,avater, ajoutDev, messageBtn ,ville,followers,following, lienGithub} 
+import { userName, login, bio , repos, totalDepots,avater, ajoutDev, messageBtn ,ville,followers,following, lienGithub , dateCreation} 
   from "./donnees-initiales.js";
 import { mockapi , ajoutDevelopper } from "../api/mackapi.js";
 
@@ -17,6 +17,7 @@ async function affichageProfile() {
         followers.textContent = data.followers ?? 0;
         following.textContent = data.following ?? 0;
         lienGithub.href = data.html_url
+        dateCreation.textContent = new Date(data.created_at).toLocaleDateString("fr-FR");
 
           ajoutDev.addEventListener("click", async()=>{
     const nouveauDev = {

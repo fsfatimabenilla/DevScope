@@ -19,4 +19,6 @@ export const ville = document.querySelector("#ville");
 export const followers = document.querySelector("#followers");
 export const following = document.querySelector("#following");
 export const lienGithub = document.querySelector("#lien-github");
+export const dateCreation = document.querySelector("#date-creation");
+export const totalDevlopers = document.querySelector("#tot-user");
 

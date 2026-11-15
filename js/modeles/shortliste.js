@@ -1,11 +1,13 @@
 
 import { githubProfile } from "../api/github.js";
 import { mockapi } from "../api/mackapi.js";
-import { profile } from "./donnees-initiales.js";
+import { profile , totalDevlopers } from "./donnees-initiales.js";
 
 async function affichageUser() {
     try {
         const dev = await mockapi();
+
+        totalDevlopers.textContent = `${dev.length} Devlopers`
 
         profile.innerHTML = "";
 
