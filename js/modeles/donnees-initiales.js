@@ -15,4 +15,8 @@ export const totalDepots = document.querySelector("#tot-depots");
 export const ajoutDev = document.querySelector("#btn-shortlist");
 export const messageBtn = document.querySelector("#message-shortlist");
 export const profile = document.querySelector("#profil-containir");
+export const ville = document.querySelector("#ville");
+export const followers = document.querySelector("#followers");
+export const following = document.querySelector("#following");
+export const lienGithub = document.querySelector("#lien-github");
 

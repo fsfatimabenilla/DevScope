@@ -1,6 +1,7 @@
 
 import { githubProfile , githubDepots, githublanguage } from "../api/github.js";
-import { userName, login, bio , repos, totalDepots,avater, ajoutDev, messageBtn } from "./donnees-initiales.js";
+import { userName, login, bio , repos, totalDepots,avater, ajoutDev, messageBtn ,ville,followers,following, lienGithub} 
+  from "./donnees-initiales.js";
 import { mockapi , ajoutDevelopper } from "../api/mackapi.js";
 
 const username = new URLSearchParams(window.location.search).get("username");
@@ -12,6 +13,10 @@ async function affichageProfile() {
         userName.textContent = data.name || data.login;
         login.textContent = `@${data.login}`;
         bio.textContent = data.bio || "Aucune bio disponible";
+        ville.textContent = data.location || "Ville non spécifiée";
+        followers.textContent = data.followers ?? 0;
+        following.textContent = data.following ?? 0;
+        lienGithub.href = data.html_url
 
           ajoutDev.addEventListener("click", async()=>{
     const nouveauDev = {
@@ -54,18 +59,18 @@ async function affichageDepots() {
             const languages = await  githublanguage(username,data.name);
             
             const article = document.createElement("div");
-            article.className = " bg-white border border-rose-200 rounded-xl p-4";
+            article.className = " group flex flex-col justify-between rounded-2xl border border-rose-100 bg-white p-5 shadow-sm ";
 
             const name = document.createElement("h3");
-            name.className = "text-xl font-bold text-rose-800";
+            name.className = "text-lg font-bold text-rose-800";
             name.textContent = data.name;
 
             const description = document.createElement("p");
-            description.className = "text-gray-600 mt-3";
+            description.className = "mt-3 min-h-12 text-sm  text-slate-500";
             description.textContent = data.description || "Aucune description disponible";
 
             const language = document.createElement("p");
-             language.className = "text-rose-300 mt-3 font-semibold";
+             language.className = "inline-block w-fit rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-700";
              language.textContent = Object.keys(languages).join(" | ") || "Langage non spécifié";
 
             article.append(name, description, language);
