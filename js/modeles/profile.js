@@ -31,6 +31,14 @@ async function affichageProfile() {
         created_at: data.created_at
     }
     try{
+        const developers = await mockapi();
+        // Vérifier léexistance du développeurs:
+        const exist = developers.find(dev => dev.login === nouveauDev.login);
+        if(exist){
+            messageBtn.textContent = "Ce Developper est déja dans shortlist! "
+            return ;
+        }
+
         const resultat = await ajoutDevelopper(nouveauDev);
         messageBtn.textContent = "Developper ajouter avec succés" ;
         console.log("Developer : " , resultat);

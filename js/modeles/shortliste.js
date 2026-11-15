@@ -9,7 +9,13 @@ async function affichageUser() {
 
         profile.innerHTML = "";
 
+        const existDev = [];
         for(const data of dev ) {
+            if(existDev.includes(data.login)){
+                continue;
+            }
+            existDev.push(data.login);
+
             const carte = document.createElement("article");
             carte.className = "flex flex-col gap-5 rounded-2xl border border-rose-100 bg-white p-5 shadow-sm sm:flex-row sm:items-center";
 
