@@ -1,10 +1,14 @@
 
 import { githubProfile , githubDepots, githublanguage } from "../api/github.js";
-import { userName, login, bio , repos, totalDepots,avater, ajoutDev, messageBtn ,ville,followers,following, lienGithub , dateCreation} 
+import { userName, login, bio , repos, totalDepots,avater, ajoutDev, messageBtn ,ville,followers,following, lienGithub , dateCreation, depotchercher, depotFiltrer} 
   from "./donnees-initiales.js";
 import { mockapi , ajoutDevelopper } from "../api/mackapi.js";
 
 const username = new URLSearchParams(window.location.search).get("username");
+let toutDepot = [];
+let languageChoisi = "Tous";
+let profil = null;
+
 async function affichageProfile() {
     try {
         const data = await githubProfile(username);
@@ -58,35 +62,18 @@ affichageProfile();
 
 async function affichageDepots() {
     try {
-        const depots = await githubDepots(username);
+       toutDepot = await githubDepots(username);
+
+         for (let depot of toutDepot) {
+            depot.languages = await githublanguage(username, depot.name);
+        }
 
         repos.innerHTML = "";
-        totalDepots.textContent = `${depots.length} dépôts`;
+        totalDepots.textContent = `${toutDepot.length} dépôts`;
 
-        depots.forEach(async(data)=>{
+        listeLanguage();
+        searchFilre();
 
-            
-            const languages = await  githublanguage(username,data.name);
-            
-            const article = document.createElement("div");
-            article.className = " group flex flex-col justify-between rounded-2xl border border-rose-100 bg-white p-5 shadow-sm ";
-
-            const name = document.createElement("h3");
-            name.className = "text-lg font-bold text-rose-800";
-            name.textContent = data.name;
-
-            const description = document.createElement("p");
-            description.className = "mt-3 min-h-12 text-sm  text-slate-500";
-            description.textContent = data.description || "Aucune description disponible";
-
-            const language = document.createElement("p");
-             language.className = "inline-block w-fit rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-700";
-             language.textContent = Object.keys(languages).join(" | ") || "Langage non spécifié";
-
-            article.append(name, description, language);
-
-            repos.append(article);
-          });
 
     } catch (e) {
         console.log("Erreur:", e.message);
@@ -104,33 +91,78 @@ async function verifierMockapi() {
 verifierMockapi();
 
 
-// async function ajoutDevelopper() {
-//     const nouveauDev = {
-//         name: "Fatima",
-//         avatar_url: "https://i.pravatar.cc/150",
-//         language: "JavaScript",
-//         rating: 5,
-//         statuts: "Actif",
-//         note: " Developer"
-//     };
-//     try {
-//         const response = await fetch("https://6af58659f6270fa08d682dbf.mockapi.io/api/v1/developer", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json"
-//             },
-//             body: JSON.stringify(nouveauDev)
-//         });
-//         if (!response.ok) {
-//             throw new Error(`Erreur HTTP : ${response.status}`);
-//         }
+// search an filtre :
 
-//         const data = await response.json();
-//         console.log("Developer ajouté :", data);
-//     } catch (e) {
-//         console.log("Erreur :", e.message);
-//     }
-// }
-// ajoutDevelopper();
 
+function listeLanguage(){
+    if(!depotFiltrer) return;
+    const language = [...new Set(toutDepot.flatMap(depot => Object.keys(depot.languages || {})))];
+    language.forEach(langage => {
+        const option = document.createElement("option");
+         option.value = langage;
+        option.textContent = langage;
+        depotFiltrer.append(option);
+    });
+}
+
+
+function searchFilre(){
+    const recherche = depotchercher.value.toLowerCase();
+
+    const depotsFiltres = toutDepot.filter(data => {
+
+        const nomCorrespond = data.name.toLowerCase().includes(recherche);
+
+        const languageCorrespond =
+            languageChoisi === "Tous" || Object.keys(data.languages || {}).includes(languageChoisi);
+
+        return nomCorrespond && languageCorrespond;
+    });
+
+    repos.innerHTML = "";
+
+    if (depotsFiltres.length === 0) {
+        repos.textContent = "Aucun dépôt trouvé";
+        return;
+    }
+
+
+      depotsFiltres.forEach(data =>{
+            
+            const article = document.createElement("div");
+            article.className = " group flex flex-col justify-between rounded-2xl border border-rose-100 bg-white p-5 shadow-sm ";
+
+            article.dataset.name = data.name.toLowerCase();
+            article.dataset.language = data.language ;
+            article.classList.add("depos-card");
+
+            const name = document.createElement("h3");
+            name.className = "text-lg font-bold text-rose-800";
+            name.textContent = data.name;
+
+            const description = document.createElement("p");
+            description.className = "mt-3 min-h-12 text-sm  text-slate-500";
+            description.textContent = data.description || "Aucune description disponible";
+
+            const language = document.createElement("p");
+             language.className = "inline-block w-fit rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-700";
+             language.textContent = Object.keys(data.languages || {}).join(" | ") || "Langage non spécifié";
+
+            article.append(name, description, language);
+
+            repos.append(article);
+          });
+
+}
+
+if (depotchercher) {
+    depotchercher.addEventListener("input", searchFilre);
+}
+
+if (depotFiltrer) {
+    depotFiltrer.addEventListener("change", () => {
+        languageChoisi = depotFiltrer.value;
+        searchFilre();
+    });
+}
 

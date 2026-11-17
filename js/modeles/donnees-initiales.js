@@ -22,3 +22,6 @@ export const lienGithub = document.querySelector("#lien-github");
 export const dateCreation = document.querySelector("#date-creation");
 export const totalDevlopers = document.querySelector("#tot-user");
 
+export const depotFiltrer = document.querySelector("#filtre-depot");
+export const depotchercher = document.querySelector("#search-depot");
+

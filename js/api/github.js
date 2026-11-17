@@ -50,4 +50,3 @@ export async function githublanguage(username, repoName) {
         
     }
 }
-
