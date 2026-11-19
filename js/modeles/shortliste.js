@@ -280,7 +280,8 @@ function deletModal(developer,carte){
 
     annuleBtn.addEventListener("click", () => modal.remove());
     
-    deleteBtn.addEventListener("click", async() =>{
+    deleteBtn.addEventListener("click", async event =>{
+        event.preventDefault();
         deleteBtn.disabled = true;
         deleteBtn.textContent = "Suppression ...";
 
@@ -302,6 +303,7 @@ function deletModal(developer,carte){
     });
 
 }
+
 
 
 

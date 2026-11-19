@@ -38,7 +38,7 @@ export async function updateDevelopper(id , developer) {
 
     try {
         const response = await fetch(`https://6af58659f6270fa08d682dbf.mockapi.io/api/v1/developer/${id}`, {
-            method: "PATCH",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },

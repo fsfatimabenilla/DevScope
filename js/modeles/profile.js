@@ -3,6 +3,7 @@ import { githubProfile , githubDepots, githublanguage } from "../api/github.js";
 import { userName, login, bio , repos, totalDepots,avater, ajoutDev, messageBtn ,ville,followers,following, lienGithub , dateCreation, depotchercher, depotFiltrer} 
   from "./donnees-initiales.js";
 import { mockapi , ajoutDevelopper } from "../api/mackapi.js";
+import { getCache , setCache } from "./cache.js";
 
 const username = new URLSearchParams(window.location.search).get("username");
 let toutDepot = [];
@@ -11,7 +12,19 @@ let profil = null;
 
 async function affichageProfile() {
     try {
-        const data = await githubProfile(username);
+
+        const key = "profile-" + username;
+        // Vérifier si le Profile existe dans Cache
+        let  data = getCache(key);
+        if(data){
+             console.log("Profil chargé depuis Cache");
+        }else{
+            // Récupérer profile depuis API
+            data = await githubProfile(username);
+            // Enregister profile dans cache
+            setCache(key,data);
+            console.log("Profil chargé depuis API");
+        }
 
         avater.src = data.avatar_url;
         userName.textContent = data.name || data.login;
@@ -58,14 +71,32 @@ async function affichageProfile() {
         console.log("Erreur:", e.message);
     }
 }
-affichageProfile();
 
 async function affichageDepots() {
     try {
-       toutDepot = await githubDepots(username);
-
-         for (let depot of toutDepot) {
-            depot.languages = await githublanguage(username, depot.name);
+        const key = "depots-" + username;
+        // Vérifier si les Dépôts existent dans Cache
+        toutDepot = getCache(key);
+        if(toutDepot){
+             console.log("Dépôts chargé depuis Cache");
+        }else{
+            // Récupérer les Dépôts depuis API
+            toutDepot = await githubDepots(username);
+     
+            if(!toutDepot){
+                throw new Error("Dépôts introuvables");
+            }
+            // Récuperer languages de tous dépts en meme time
+              const languages = await Promise.all(toutDepot.map(depot=> githublanguage(username, depot.name)));
+                
+            //   Ajout language pour chaque depot
+            toutDepot.forEach((depot,index)=> {
+                depot.languages = languages[index];
+            });
+             
+            //  Enregister dépot et languages dans Cache
+             setCache(key, toutDepot);
+             console.log("Dépôts chargé depuis API");
         }
 
         repos.innerHTML = "";
@@ -81,7 +112,15 @@ async function affichageDepots() {
 
 }
 
-affichageDepots();
+
+// chargement 
+async function charge() {
+    await Promise.all([
+        affichageDepots(),
+        affichageProfile(),
+    ]);
+}
+charge();
 
 async function verifierMockapi() {
     const developer = await mockapi() ;
