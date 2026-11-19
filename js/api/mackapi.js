@@ -33,3 +33,40 @@ export async function ajoutDevelopper(developer) {
         console.log("Erreur :", e.message);
     }
 }
+
+export async function updateDevelopper(id , developer) {
+
+    try {
+        const response = await fetch(`https://6af58659f6270fa08d682dbf.mockapi.io/api/v1/developer/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(developer)
+        });
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP : ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Developer Modifié :", data);
+        return data;
+    } catch (e) {
+        console.log("Erreur :", e.message);
+    }
+}
+
+export async function deleteDevelopper(id) {
+
+    try {
+        const response = await fetch(`https://6af58659f6270fa08d682dbf.mockapi.io/api/v1/developer/${id}`, {
+            method: "DELETE"
+        });
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP : ${response.status}`);
+        }
+        return true;
+    } catch (e) {
+        console.log("Erreur :", e.message);
+    }
+}
