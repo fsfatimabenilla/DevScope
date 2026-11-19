@@ -76,7 +76,7 @@ async function affichageUser() {
             delet.type = "button";
 
             update.addEventListener("click", () => updateModale(data, carte));
-            // delet.addEventListener("click", () => deletModal(data,delet));
+            delet.addEventListener("click", () => deletModal(data,delet));
 
 
             const lien = document.createElement("a");
@@ -238,6 +238,69 @@ function updateModale(developer, carte) {
             saveBtn.textContent = "Enregistrer";
         }
     });
+}
+
+
+function deletModal(developer,carte){
+    // modale
+    const modal = document.createElement("div");
+    modal.className = "fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4";
+
+    const contenu = document.createElement("div");
+    contenu.className = "w-full max-w-md space-y-4 rounded-2xl bg-white p-6 shadow-xl";
+
+    const title = document.createElement("h2");
+    title.className = "text-xl font-bold text-rose-900";
+    title.textContent = "Supprimer ce developpeur";
+
+    const message = document.createElement("p");
+    message.className = "text-sm text-slate-600"; 
+    message.textContent = `Voulze-vous vraiment supprimer ${developer.name} ?`;
+
+    // btn 
+    
+    // Buttons
+    const cntBtn = document.createElement("div");
+    cntBtn.className = "flex justify-end gap-2";
+
+    const annuleBtn = document.createElement("button");
+    annuleBtn.className = "rounded-xl border px-4 py-2";
+    annuleBtn.textContent = "Annuler";
+    annuleBtn.type = "button";
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "rounded-xl bg-rose-500 px-4 py-2 text-white";
+    deleteBtn.textContent = "Supprimer";
+    deleteBtn.type = "submit";
+
+    cntBtn.append(annuleBtn,deleteBtn);
+    contenu.append(title, message, cntBtn);
+    modal.append(contenu);
+    document.body.append(modal);
+
+    annuleBtn.addEventListener("click", () => modal.remove());
+    
+    deleteBtn.addEventListener("click", async() =>{
+        deleteBtn.disabled = true;
+        deleteBtn.textContent = "Suppression ...";
+
+        try{
+           const resultat = await deleteDevelopper(developer.id);
+
+            if (!resultat) {
+                throw new Error("Suppresion échouée");
+            }
+            modal.remove();
+            affichageUser();
+
+        } catch (e) {
+            console.log("Erreur :", e.message);
+            message.textContent = "Erreur lors de la suppression";
+            deleteBtn.disabled = false;
+            deleteBtn.textContent = "Supprimer";
+        }
+    });
+
 }
 
 
