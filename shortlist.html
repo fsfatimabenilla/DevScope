@@ -39,14 +39,14 @@
         <section class="m-7 flex flex-col justify-between gap-3 rounded-2xl border border-rose-100 bg-white p-5 shadow-sm lg:flex-row  lg:items-center"">
                 <nav>
                     <ul class="flex flex-wrap gap-2 text-sm font-medium">
-                        <li><button type="button" class="bg-rose-300 rounded-lg p-4">Tous</button></li>
-                        <li><button type="button" class="p-4 rounded-lg hover:bg-rose-200">A contacter</button></li>
-                        <li><button type="button" class="p-4 rounded-lg hover:bg-rose-200">Entretien</button></li>
-                        <li><button type="button" class="p-4 rounded-lg hover:bg-rose-200">Retenu</button></li>
-                        <li><button type="button" class="p-4 rounded-lg hover:bg-rose-200">Refusé</button></li>
+                        <li><button data-statut="Tous" type="button" class="bg-rose-300 rounded-lg p-4">Tous</button></li>
+                        <li><button data-statut="A contacter" type="button" class="p-4 rounded-lg hover:bg-rose-200">A contacter</button></li>
+                        <li><button data-statut="Accepté" type="button" class="p-4 rounded-lg hover:bg-rose-200">accépte</button></li>
+                        <li><button data-statut="En cours" type="button" class="p-4 rounded-lg hover:bg-rose-200">en cours</button></li>
+                        <li><button data-statut="Réfusé" type="button" class="p-4 rounded-lg hover:bg-rose-200">Refusé</button></li>
                     </ul>
                 </nav>
-                 <input type="search" placeholder="Rechercher un candidat ..."  class="rounded-xl border border-rose-200 bg-white px-4 py-3 outline-none focus:border-rose-400 sm:w-27" >
+                 <input type="search" id="recherche" placeholder="Rechercher un candidat ..."  class="rounded-xl border border-rose-200 bg-white px-4 py-3 outline-none focus:border-rose-400 sm:w-27" >
         </section>
         <section id="profil-containir" class="flex max-h-[650px] flex-col gap-4 overflow-y-auto rounded-2xl p-1">
 

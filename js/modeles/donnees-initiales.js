@@ -25,3 +25,6 @@ export const totalDevlopers = document.querySelector("#tot-user");
 export const depotFiltrer = document.querySelector("#filtre-depot");
 export const depotchercher = document.querySelector("#search-depot");
 
+export const btnFiltre = document.querySelectorAll("[data-statut]");
+export const rechercheInput = document.querySelector("#recherche");
+

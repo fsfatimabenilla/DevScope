@@ -2,6 +2,7 @@
 import { githubProfile } from "../api/github.js";
 import { mockapi , updateDevelopper , deleteDevelopper } from "../api/mackapi.js";
 import { profile , totalDevlopers } from "./donnees-initiales.js";
+import { searchFiltre , initRecherche } from "./search.js";
 
 const STATUTS = [
     "A contacter",
@@ -21,7 +22,16 @@ async function affichageUser() {
         profile.innerHTML = "";
 
         const existDev = [];
-        for(const data of dev ) {
+        const resultat = searchFiltre(dev);
+        if(resultat.length === 0){
+            const message = document.createElement("p");
+            message.className = "py-10 text-center text-red-600 font-semibold"
+            message.textContent = "Aucun user trouvé.";
+            profile.append(message);
+            return ;
+        }
+
+        for(const data of resultat) {
             if(existDev.includes(data.login)){
                 continue;
             }
@@ -97,7 +107,7 @@ async function affichageUser() {
         console.log("Erreur:", e.message);
     }
 }
-
+initRecherche(affichageUser);
 affichageUser();
 
 
