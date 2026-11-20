@@ -86,13 +86,13 @@ async function affichageDepots() {
             if(!toutDepot){
                 throw new Error("Dépôts introuvables");
             }
-            // Récuperer languages de tous dépts en meme time
-              const languages = await Promise.all(toutDepot.map(depot=> githublanguage(username, depot.name)));
+            // // Récuperer languages de tous dépts en meme time
+            //   const languages = await Promise.all(toutDepot.map(depot=> githublanguage(username, depot.name)));
                 
-            //   Ajout language pour chaque depot
-            toutDepot.forEach((depot,index)=> {
-                depot.languages = languages[index];
-            });
+            // //   Ajout language pour chaque depot
+            // toutDepot.forEach((depot,index)=> {
+            //     depot.languages = languages[index];
+            // });
              
             //  Enregister dépot et languages dans Cache
              setCache(key, toutDepot);
@@ -104,6 +104,7 @@ async function affichageDepots() {
 
         listeLanguage();
         searchFilre();
+        chargeLanguages(key);
 
 
     } catch (e) {
@@ -121,6 +122,24 @@ async function charge() {
     ]);
 }
 charge();
+
+async function chargeLanguages(key) {
+    try {
+        const languages = await Promise.all(
+            toutDepot.map(depot => githublanguage(username, depot.name)));
+        toutDepot.forEach((depot, index) => {
+            depot.languages = languages[index] || {};
+        });
+
+        // Mise à jour du Cache
+        setCache(key, toutDepot);
+        listeLanguage();
+        searchFilre();
+
+    } catch (e) {
+        console.log("Erreur Languages:", e.message);
+    }
+}
 
 async function verifierMockapi() {
     const developer = await mockapi() ;
@@ -204,4 +223,3 @@ if (depotFiltrer) {
         searchFilre();
     });
 }
-
