@@ -9,6 +9,8 @@ const STATUTS = [
     "Accepté",
     "Refusé"
 ];
+let timeDelete ;
+
 
 async function affichageUser() {
     try {
@@ -282,9 +284,28 @@ function deletModal(developer,carte){
     
     deleteBtn.addEventListener("click", async event =>{
         event.preventDefault();
+        modal.remove();
+
+        // Message avec bouton Annuler
+        const notification = document.createElement("div");
+        notification.className = "fixed bottom-5 right-5 z-50 flex items-center gap-4 rounded-xl bg-slate-800 p-4 text-white shadow-lg";
+
+        const texte = document.createElement("p");
+        texte.textContent = `${developer.name} sera supprimé dans 5 secondes`;
+
+        const btnAnnuler = document.createElement("button");
+        btnAnnuler.className = "font-bold text-rose-300";
+        btnAnnuler.textContent = "Annuler";
+        btnAnnuler.type = "button";
+
+         notification.append(texte, btnAnnuler);
+        document.body.append(notification);
+
+
         deleteBtn.disabled = true;
         deleteBtn.textContent = "Suppression ...";
 
+        timeDelete = setTimeout(async () => {
         try{
            const resultat = await deleteDevelopper(developer.id);
 
@@ -293,6 +314,7 @@ function deletModal(developer,carte){
             }
             modal.remove();
             affichageUser();
+            notification.remove();
 
         } catch (e) {
             console.log("Erreur :", e.message);
@@ -300,10 +322,17 @@ function deletModal(developer,carte){
             deleteBtn.disabled = false;
             deleteBtn.textContent = "Supprimer";
         }
+        
+    },5000);
+
+    btnAnnuler.addEventListener("click",()=>{
+        clearTimeout(timeDelete);
+        notification.remove();
     });
+    
+});
 
 }
-
 
 
 
